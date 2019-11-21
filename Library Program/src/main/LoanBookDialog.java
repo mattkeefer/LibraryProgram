@@ -1,15 +1,19 @@
 package main;
 import BreezySwing.*;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 public class LoanBookDialog extends GBDialog {
-
-//	JComboBox comboMonth = addComboBox(1,1,1,1);
-//	JTextField monthField = addTextField("", 2,1,1,1);
-//	JComboBox comboDay = addComboBox(1,2,1,1);
-//	JTextField dayField = addTextField("", 2,2,1,1);
-//	JTextField yearField = addTextField("", 2,3,1,1);
-//	
-//	JButton exit = addButton("Return", 5,1,1,1);
+	
+	JComboBox comboMonth = addComboBox(1,1,1,1);
+	JTextField monthField = addTextField("", 2,1,1,1);
+	JComboBox comboDay = addComboBox(1,2,1,1);
+	JTextField dayField = addTextField("", 2,2,1,1);
+	JTextField yearField = addTextField("", 2,3,1,1);
+	
+	JButton exit = addButton("Return", 5,1,1,1);
 	String[] months = {"Jan", "Feb", "Mar"};
 	JComboBox month = new JComboBox(months);
 	
@@ -17,64 +21,99 @@ public class LoanBookDialog extends GBDialog {
 	
 	public LoanBookDialog(JFrame frm, Library l) {
 		super(frm);
+		comboMonth.addItem("January");
+		comboMonth.addItem("February");
+		comboMonth.addItem("March");
+		comboMonth.addItem("April");
+		comboMonth.addItem("May");
+		comboMonth.addItem("June");
+		comboMonth.addItem("July");
+		comboMonth.addItem("August");
+		comboMonth.addItem("September");
+		comboMonth.addItem("October");
+		comboMonth.addItem("November");
+		comboMonth.addItem("December");
+		comboDay.setVisible(false);
+		lib = l;
+		comboMonth.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				comboDay.removeAllItems();
+				comboDay.setVisible(true);
+				setDayComboBox();
+				
+			}
+		});
 		setSize(400, 200);
 		setTitle("View Books");
 		setVisible(true);
-		lib = l;
-		
-//		comboMonth.addItem("January");
-//		comboMonth.addItem("February");
-//		comboMonth.addItem("March");
-//		comboMonth.addItem("April");
-//		comboMonth.addItem("May");
-//		comboMonth.addItem("June");
-//		comboMonth.addItem("July");
-//		comboMonth.addItem("August");
-//		comboMonth.addItem("September");
-//		comboMonth.addItem("October");
-//		comboMonth.addItem("November");
-//		comboMonth.addItem("December");
-		
-//		comboDay.addItem("1");
-//		comboDay.addItem("2");
-//		comboDay.addItem("3");
-//		comboDay.addItem("4");
-//		comboDay.addItem("5");
-//		comboDay.addItem("6");
-//		comboDay.addItem("7");
-//		comboDay.addItem("8");
-//		comboDay.addItem("9");
-//		comboDay.addItem("10");
-//		comboDay.addItem("11");
-//		comboDay.addItem("12");
-//		comboDay.addItem("13");
-//		comboDay.addItem("14");
-//		comboDay.addItem("15");
-//		comboDay.addItem("16");
-//		comboDay.addItem("17");
-//		comboDay.addItem("18");
-//		comboDay.addItem("19");
-//		comboDay.addItem("20");
-//		comboDay.addItem("21");
-//		comboDay.addItem("22");
-//		comboDay.addItem("23");
-//		comboDay.addItem("24");
-//		comboDay.addItem("25");
-//		comboDay.addItem("26");
-//		comboDay.addItem("27");
-//		comboDay.addItem("28");
-//		comboDay.addItem("29");
-//		comboDay.addItem("30");
-//		comboDay.addItem("31");
 	}
 	
-//	public void buttonClicked(JButton button) {
-//		if(button==exit) {
-//			dispose();
-//		}
-//		else {
-//			monthField.setText((String)comboMonth.getSelectedItem());
-//			dayField.setText((String)comboDay.getSelectedItem());
-//		}
-//	}
+	private void setDayComboBox() {
+		
+		for(int i=1; i<=28; i++) {
+			comboDay.addItem(i);
+		}
+		switch(comboMonth.getSelectedItem().toString()) {
+		case "January" :
+			comboDay.addItem(29);
+			comboDay.addItem(30);
+			comboDay.addItem(31);
+			break;
+		case "February" :
+			break;
+		case "March" :
+			comboDay.addItem(29);
+			comboDay.addItem(30);
+			comboDay.addItem(31);
+			break;
+		case "April" :
+			comboDay.addItem(29);
+			comboDay.addItem(30);
+			break;
+		case "May" :
+			comboDay.addItem(29);
+			comboDay.addItem(30);
+			comboDay.addItem(31);
+			break;
+		case "June" :
+			comboDay.addItem(29);
+			comboDay.addItem(30);
+			break;
+		case "July" :
+			comboDay.addItem(29);
+			comboDay.addItem(30);
+			comboDay.addItem(31);
+			break;
+		case "August" :
+			comboDay.addItem(29);
+			comboDay.addItem(30);
+			comboDay.addItem(31);
+			break;
+		case "September" :
+			comboDay.addItem(29);
+			comboDay.addItem(30);
+			break;
+		case "October" :
+			comboDay.addItem(29);
+			comboDay.addItem(30);
+			comboDay.addItem(31);
+			break;
+		case "November" :
+			comboDay.addItem(29);
+			comboDay.addItem(30);
+			break;
+		case "December" :
+			comboDay.addItem(29);
+			comboDay.addItem(30);
+			comboDay.addItem(31);
+			break;
+		}
+	}
+	
+	public void buttonClicked(JButton button) {
+		if(button==exit) {
+			dispose();
+		}
+	}
 }

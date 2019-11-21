@@ -9,11 +9,14 @@ public class AddBookDialog extends GBDialog {
 	JTextField authorName = addTextField("", 2,2,1,1);
 	JButton addBook = addButton("Add Book", 3,2,1,1);
 	
-	public AddBookDialog(JFrame frm) {
+	Library lib;
+	
+	public AddBookDialog(JFrame frm, Library l) {
 		super(frm);
 		setSize(400, 200);
 		setTitle("Add Book");
 		setVisible(true);
+		lib = l;
 	}
 	
 	public void buttonClicked(JButton button) {
@@ -22,12 +25,8 @@ public class AddBookDialog extends GBDialog {
 		}
 		else {
 			Book b = new Book(bookTitle.getText(), authorName.getText());
-			storeBook(b);
+			lib.storeBook(b);
 			dispose();
 		}
-	}
-	
-	private static void storeBook(Book bk) {
-		
 	}
 }

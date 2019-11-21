@@ -3,7 +3,6 @@
  * Library Program
  * 12/3/19
  */
-// this is imported from github
 package main;
 import javax.swing.*;
 import BreezySwing.*;
@@ -16,6 +15,7 @@ public class LibraryGUI extends GBFrame {
 	JButton returnBookButton = addButton("Return Book", 1,3,1,1);
 	JButton viewButton = addButton("View Books", 1,4,1,1);
 	JButton viewOverdueButton = addButton("View Overdue", 1,5,1,1);
+	Library lib = new Library();
 	
 	public static void main(String[] args) {
 		JFrame frm = new LibraryGUI();
@@ -27,8 +27,13 @@ public class LibraryGUI extends GBFrame {
 	
 	public void buttonClicked(JButton button) {
 		if(button==addBookButton) {
-			AddBookDialog abd = new AddBookDialog(this);
+			AddBookDialog abd = new AddBookDialog(this, lib);
 		}
-		
+		if(button==viewButton) {
+			ViewBookDialog vbd = new ViewBookDialog(this, lib);
+		}
+		if(button==loanBookButton) {
+			LoanBookDialog lbd = new LoanBookDialog(this, lib);
+		}
 	}
 }

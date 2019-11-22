@@ -13,10 +13,10 @@ public class AddBookDialog extends GBDialog {
 	
 	public AddBookDialog(JFrame frm, Library l) {
 		super(frm);
+		lib = l;
 		setSize(400, 200);
 		setTitle("Add Book");
 		setVisible(true);
-		lib = l;
 	}
 	
 	public void buttonClicked(JButton button) {

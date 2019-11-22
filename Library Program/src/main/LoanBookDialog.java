@@ -1,26 +1,36 @@
 package main;
 import BreezySwing.*;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.*;
+
 public class LoanBookDialog extends GBDialog {
 	
-	JComboBox comboMonth = addComboBox(1,1,1,1);
-	JTextField monthField = addTextField("", 2,1,1,1);
-	JComboBox comboDay = addComboBox(1,2,1,1);
-	JTextField dayField = addTextField("", 2,2,1,1);
-	JTextField yearField = addTextField("", 2,3,1,1);
-	
+	JLabel bookLabel = addLabel("Select book:", 1,1,1,1);
+	JComboBox bookSelection = addComboBox(1,2,1,1);
+	JComboBox comboMonth = addComboBox(2,1,1,1);
+	JComboBox comboDay = addComboBox(2,2,1,1);
+	JComboBox comboYear = addComboBox(2,3,1,1);
+	JButton loan = addButton("Check Out", 5,2,1,1);
 	JButton exit = addButton("Return", 5,1,1,1);
-	String[] months = {"Jan", "Feb", "Mar"};
-	JComboBox month = new JComboBox(months);
 	
 	Library lib;
 	
+	private boolean isLeapYear(int y) {
+		return (y%4==0)&&(y%100!=0)||(y%400==0);
+	}
+	
 	public LoanBookDialog(JFrame frm, Library l) {
 		super(frm);
+		for(int i=0; i<l.getSize(); i++) {
+			if(!(l.getBook(i).isCheckedOut())) {
+				bookSelection.addItem(l.getBook(i).getTitle());
+			}
+		}
+		for(int i=0; i<=5000; i++) {
+			comboYear.addItem(i);
+			comboYear.setSelectedItem(2019);
+		}
 		comboMonth.addItem("January");
 		comboMonth.addItem("February");
 		comboMonth.addItem("March");
@@ -33,15 +43,26 @@ public class LoanBookDialog extends GBDialog {
 		comboMonth.addItem("October");
 		comboMonth.addItem("November");
 		comboMonth.addItem("December");
-		comboDay.setVisible(false);
+		
+		comboMonth.setSelectedItem("January");
+		setDayComboBox();
+		comboDay.setSelectedItem(1);
 		lib = l;
 		comboMonth.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				comboDay.removeAllItems();
-				comboDay.setVisible(true);
 				setDayComboBox();
 				
+			}
+		});
+		comboYear.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(isLeapYear((int)comboYear.getSelectedItem())) {
+					comboDay.removeAllItems();
+					setDayComboBox();
+				}
 			}
 		});
 		setSize(400, 200);
@@ -61,6 +82,9 @@ public class LoanBookDialog extends GBDialog {
 			comboDay.addItem(31);
 			break;
 		case "February" :
+			if(isLeapYear((int)comboYear.getSelectedItem())) {
+				comboDay.addItem(29);
+			}
 			break;
 		case "March" :
 			comboDay.addItem(29);
@@ -112,8 +136,9 @@ public class LoanBookDialog extends GBDialog {
 	}
 	
 	public void buttonClicked(JButton button) {
-		if(button==exit) {
-			dispose();
+		if(button==loan) {
+			lib.getBook(bookSelection.getSelectedIndex()).checkOut(true);
 		}
+		dispose();
 	}
 }

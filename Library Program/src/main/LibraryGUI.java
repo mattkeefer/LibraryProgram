@@ -13,15 +13,16 @@ public class LibraryGUI extends GBFrame {
 	JButton addBookButton = addButton("Add Book", 1,1,1,1);
 	JButton loanBookButton = addButton("Loan Book", 1,2,1,1);
 	JButton returnBookButton = addButton("Return Book", 1,3,1,1);
-	JButton viewButton = addButton("View Books", 1,4,1,1);
-	JButton viewOverdueButton = addButton("View Overdue", 1,5,1,1);
+	JButton searchBookButton = addButton("Search", 1,4,1,1);
+	JButton viewButton = addButton("View Books", 1,5,1,1);
+	JButton viewOverdueButton = addButton("View Overdue", 1,6,1,1);
 	
 	Library lib = new Library();
 	
 	public static void main(String[] args) {
 		JFrame frm = new LibraryGUI();
 		frm.setTitle("¿Donde esta la biblioteca?");
-		frm.setSize(600, 100);
+		frm.setSize(800, 200);
 		frm.setVisible(true);
 		frm.getContentPane().setBackground(new Color(204, 78, 92));
 	}

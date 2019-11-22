@@ -10,12 +10,12 @@ public class ViewBookDialog extends GBDialog {
 	
 	public ViewBookDialog(JFrame frm, Library l) {
 		super(frm);
-		setSize(400, 200);
-		setTitle("View Books");
-		setVisible(true);
 		output.setEditable(false);
 		lib = l;
 		output.setText(lib.getLibrary());
+		setSize(400, 200);
+		setTitle("View Books");
+		setVisible(true);
 	}
 	
 	public void buttonClicked(JButton button) {

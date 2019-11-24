@@ -21,7 +21,7 @@ public class AddBookDialog extends GBDialog {
 	
 	public void buttonClicked(JButton button) {
 		if(bookTitle.getText().trim().equals("") || authorName.getText().trim().equals("")) {
-			messageBox("BIG BAD");
+			throw new FormatException("f");
 		}
 		else {
 			Book b = new Book(bookTitle.getText(), authorName.getText());

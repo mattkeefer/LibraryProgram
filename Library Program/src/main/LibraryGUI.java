@@ -28,14 +28,24 @@ public class LibraryGUI extends GBFrame {
 	}
 	
 	public void buttonClicked(JButton button) {
-		if(button==addBookButton) {
-			AddBookDialog abd = new AddBookDialog(this, lib);
+		try {	
+			if(button==addBookButton) {
+				AddBookDialog abd = new AddBookDialog(this, lib);
+			}
+			if(button==viewButton) {
+				ViewBookDialog vbd = new ViewBookDialog(this, lib);
+			}
+			if(button==loanBookButton) {
+				if(lib.getInStockSize()!=0) {
+					LoanBookDialog lbd = new LoanBookDialog(this, lib);
+				}
+				else {
+					messageBox("There are no books in stock.");
+				}
+			}
 		}
-		if(button==viewButton) {
-			ViewBookDialog vbd = new ViewBookDialog(this, lib);
-		}
-		if(button==loanBookButton) {
-			LoanBookDialog lbd = new LoanBookDialog(this, lib);
+		catch(FormatException e) {
+			messageBox(e.getMessage());
 		}
 	}
 }

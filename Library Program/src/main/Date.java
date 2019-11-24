@@ -11,6 +11,10 @@ public class Date {
 		toDayt = convertDate(Calendar.getInstance().get(Calendar.MONTH)+1, Calendar.getInstance().get(Calendar.DATE), Calendar.getInstance().get(Calendar.YEAR));
 	}
 	
+	private boolean isLeapYear(int y) {
+		return (y%4==0)&&(y%100!=0)||(y%400==0);
+	}
+	
 	public boolean isOverdue() {
 		if(toDayt[0] > dueDate[0] && toDayt[1] >= dueDate[1]) {
 			return true;
@@ -24,7 +28,7 @@ public class Date {
 		switch(mn) {
 		case 1 : //jan - 31
 			break;
-		case 2 : //feb - 28
+		case 2 : //feb - 28/29
 			date += 31;
 			break;
 		case 3 : //mar - 31
@@ -59,8 +63,15 @@ public class Date {
 			break;
 		}
 		date += dy;
-		if(date > 365) {
+		if(isLeapYear(yr) && mn>2) {
+			date++;
+		}
+		if(date>365 && !isLeapYear(yr)) {
 			date -= 365;
+			yr++;
+		}
+		else if(date>366) {
+			date -= 366;
 			yr++;
 		}
 		dateArr[0] = date;

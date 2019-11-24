@@ -22,10 +22,8 @@ public class LoanBookDialog extends GBDialog {
 	
 	public LoanBookDialog(JFrame frm, Library l) {
 		super(frm);
-		for(int i=0; i<l.getSize(); i++) {
-			if(!(l.getBook(i).isCheckedOut())) {
-				bookSelection.addItem(l.getBook(i).getTitle());
-			}
+		for(int i=0; i<l.getInStockSize(); i++) {
+			bookSelection.addItem(l.getInStockBook(i).getTitle());
 		}
 		for(int i=0; i<=5000; i++) {
 			comboYear.addItem(i);
@@ -53,7 +51,6 @@ public class LoanBookDialog extends GBDialog {
 			public void actionPerformed(ActionEvent e) {
 				comboDay.removeAllItems();
 				setDayComboBox();
-				
 			}
 		});
 		comboYear.addActionListener(new ActionListener() {
@@ -138,6 +135,7 @@ public class LoanBookDialog extends GBDialog {
 	public void buttonClicked(JButton button) {
 		if(button==loan) {
 			lib.getBook(bookSelection.getSelectedIndex()).checkOut(true);
+			lib.loanOutBook(lib.getInStockBook(bookSelection.getSelectedIndex()));
 		}
 		dispose();
 	}

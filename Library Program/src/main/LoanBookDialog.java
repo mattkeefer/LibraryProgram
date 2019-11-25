@@ -2,6 +2,8 @@ package main;
 import BreezySwing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 import javax.swing.*;
 
 public class LoanBookDialog extends GBDialog {
@@ -22,8 +24,10 @@ public class LoanBookDialog extends GBDialog {
 	
 	public LoanBookDialog(JFrame frm, Library l) {
 		super(frm);
-		for(int i=0; i<l.getInStockSize(); i++) {
-			bookSelection.addItem(l.getInStockBook(i).getTitle());
+		for(int i=0; i<l.getSize(); i++) {
+			if(!(l.getBook(i).isCheckedOut())) {
+				bookSelection.addItem(l.getBook(i).getTitle());
+			}
 		}
 		for(int i=0; i<=5000; i++) {
 			comboYear.addItem(i);
@@ -63,7 +67,7 @@ public class LoanBookDialog extends GBDialog {
 			}
 		});
 		setSize(400, 200);
-		setTitle("View Books");
+		setTitle("Loan Books");
 		setVisible(true);
 	}
 	
@@ -135,7 +139,7 @@ public class LoanBookDialog extends GBDialog {
 	public void buttonClicked(JButton button) {
 		if(button==loan) {
 			lib.getBook(bookSelection.getSelectedIndex()).checkOut(true);
-			lib.loanOutBook(lib.getInStockBook(bookSelection.getSelectedIndex()));
+			lib.loanOutBook(lib.getBook(lib.findInStockBook(bookSelection.getSelectedIndex())));
 		}
 		dispose();
 	}

@@ -4,7 +4,6 @@ import java.util.*;
 public class Library {
 
 	private ArrayList<Book> library;
-	private ArrayList<Book> inStock;
 	
 	public Library() {
 		library = new ArrayList<Book>();
@@ -12,12 +11,10 @@ public class Library {
 		library.add(new Book("The Grapes of Wrath", "John Steinbeck"));
 		library.add(new Book("To Kill A Mockingbird", "Harper Lee"));
 		library.add(new Book("Webster’s Dictionary", "Webster"));
-		inStock = library;
 	}
 	
 	public void storeBook(Book b) {
 		library.add(b);
-		inStock.add(b);
 	}
 	
 	public Book getBook(int i) {
@@ -36,15 +33,37 @@ public class Library {
 		return out;
 	}
 	
-	public Book getInStockBook(int i) {
-		return inStock.get(i);
-	}
-	
-	public int getInStockSize() {
-		return inStock.size();
-	}
-	
 	public void loanOutBook(Book b) {
-		inStock.remove(b);
+		int index = findBook(b);
+		library.get(index).checkOut(true);
+	}
+	
+	public void returnBook(Book b) {
+		int index = findBook(b);
+		library.get(index).checkOut(false);
+	}
+	
+	private int findBook(Book b) {
+		int index;
+		for(int i=0; i<library.size(); i++) {
+			if(library.get(i).equals(b)) {
+				index = i;
+				return index;
+			}
+		}
+		return -1;
+	}
+	
+	public int findInStockBook(int index) {
+		int book = 0;
+		for (int i=0; i<library.size(); i++) {
+			if(!(library.get(i).isCheckedOut())) {
+				if(book == index) {
+					return book;
+				}
+				book++;
+			}
+		}
+		return -1;
 	}
 }

@@ -19,14 +19,19 @@ public class AddBookDialog extends GBDialog {
 		setVisible(true);
 	}
 	
-	public void buttonClicked(JButton button) {
-		if(bookTitle.getText().trim().equals("") || authorName.getText().trim().equals("")) {
-			throw new FormatException("f");
+	public void buttonClicked(JButton button){
+		try {
+			if(bookTitle.getText().trim().equals("") || authorName.getText().trim().equals("")) {
+				throw new FormatException("Cannot be blank.");
+			}
+			else {
+				Book b = new Book(bookTitle.getText(), authorName.getText());
+				lib.storeBook(b);
+				dispose();
+			}
 		}
-		else {
-			Book b = new Book(bookTitle.getText(), authorName.getText());
-			lib.storeBook(b);
-			dispose();
+		catch(FormatException e) {
+			messageBox(e.getMessage());
 		}
 	}
 }

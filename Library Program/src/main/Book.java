@@ -8,11 +8,13 @@ public class Book {
 	private String author;
 	private Date date;
 	private boolean checkedOut;
+	private String borrower;
 	
 	public Book(String t, String a) {
 		title = t;
 		author = a;
 		checkedOut = false;
+		borrower = "";
 	}
 	
 	public String getTitle() {
@@ -37,5 +39,16 @@ public class Book {
 	
 	public void checkOut(boolean b) {
 		checkedOut = b;
+		if(!b) {
+			borrower = "";
+		}
+	}
+	
+	public void setBorrower(String b) {
+		borrower = b;
+	}
+	
+	public String getBorrower() {
+		return borrower;
 	}
 }

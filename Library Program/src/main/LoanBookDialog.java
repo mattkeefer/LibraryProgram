@@ -10,11 +10,14 @@ public class LoanBookDialog extends GBDialog {
 	
 	JLabel bookLabel = addLabel("Select book:", 1,1,1,1);
 	JComboBox bookSelection = addComboBox(1,2,1,1);
-	JComboBox comboMonth = addComboBox(2,1,1,1);
-	JComboBox comboDay = addComboBox(2,2,1,1);
-	JComboBox comboYear = addComboBox(2,3,1,1);
+	JLabel borLabel = addLabel("Enter borrower:", 2,1,1,1);
+	JTextField borrower = addTextField("", 2,2,1,1);
+	JComboBox comboMonth = addComboBox(3,1,1,1);
+	JComboBox comboDay = addComboBox(3,2,1,1);
+	JComboBox comboYear = addComboBox(3,3,1,1);
 	JButton loan = addButton("Check Out", 5,2,1,1);
 	JButton exit = addButton("Return", 5,1,1,1);
+	private int month = 0;
 	
 	Library lib;
 	
@@ -81,54 +84,66 @@ public class LoanBookDialog extends GBDialog {
 			comboDay.addItem(29);
 			comboDay.addItem(30);
 			comboDay.addItem(31);
+			month = 1;
 			break;
 		case "February" :
+			month = 2;
 			if(isLeapYear((int)comboYear.getSelectedItem())) {
 				comboDay.addItem(29);
 			}
 			break;
 		case "March" :
+			month = 3;
 			comboDay.addItem(29);
 			comboDay.addItem(30);
 			comboDay.addItem(31);
 			break;
 		case "April" :
+			month = 4;
 			comboDay.addItem(29);
 			comboDay.addItem(30);
 			break;
 		case "May" :
+			month = 5;
 			comboDay.addItem(29);
 			comboDay.addItem(30);
 			comboDay.addItem(31);
 			break;
 		case "June" :
+			month = 6;
 			comboDay.addItem(29);
 			comboDay.addItem(30);
 			break;
 		case "July" :
+			month = 7;
 			comboDay.addItem(29);
 			comboDay.addItem(30);
 			comboDay.addItem(31);
 			break;
 		case "August" :
+			month = 8;
 			comboDay.addItem(29);
 			comboDay.addItem(30);
 			comboDay.addItem(31);
 			break;
 		case "September" :
+			month = 9;
 			comboDay.addItem(29);
 			comboDay.addItem(30);
 			break;
 		case "October" :
+			month = 10;
 			comboDay.addItem(29);
 			comboDay.addItem(30);
 			comboDay.addItem(31);
 			break;
 		case "November" :
+			month = 11;
 			comboDay.addItem(29);
 			comboDay.addItem(30);
 			break;
 		case "December" :
+			month = 12;
 			comboDay.addItem(29);
 			comboDay.addItem(30);
 			comboDay.addItem(31);
@@ -138,9 +153,23 @@ public class LoanBookDialog extends GBDialog {
 	
 	public void buttonClicked(JButton button) {
 		if(button==loan) {
-			lib.getBook(bookSelection.getSelectedIndex()).checkOut(true);
-			lib.loanOutBook(lib.getBook(lib.findInStockBook(bookSelection.getSelectedIndex())));
+			try {
+				if(borrower.getText().trim().equals("")) {
+					throw new FormatException("Please enter borrower's name.");
+				}
+				else {
+					lib.loanOutBook(lib.findInStockBook(bookSelection.getSelectedIndex()));
+					lib.getBook(lib.findInStockBook(bookSelection.getSelectedIndex())).setBorrower(borrower.getText());
+					lib.getBook(lib.findInStockBook(bookSelection.getSelectedIndex())).setDate(month, (int)comboDay.getSelectedItem(), (int)comboYear.getSelectedItem());
+					dispose();
+				}
+			}
+			catch(FormatException e) {
+				messageBox(e.getMessage());
+			}
 		}
-		dispose();
+		else {
+			dispose();
+		}
 	}
 }

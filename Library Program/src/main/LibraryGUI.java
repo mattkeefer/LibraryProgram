@@ -42,5 +42,13 @@ public class LibraryGUI extends GBFrame {
 				messageBox("There are no books in stock.");
 			}
 		}
+		if(button==returnBookButton) {
+			if(lib.findLoanedOutBook(0)!=-1) {
+				ReturnBookDialog rbd = new ReturnBookDialog(this, lib);
+			}
+			else {
+				messageBox("There are no books loaned out.");
+			}
+		}
 	}
 }

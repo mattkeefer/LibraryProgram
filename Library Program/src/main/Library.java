@@ -33,9 +33,8 @@ public class Library {
 		return out;
 	}
 	
-	public void loanOutBook(Book b) {
-		int index = findBook(b);
-		library.get(index).checkOut(true);
+	public void loanOutBook(int i) {
+		library.get(i).checkOut(true);
 	}
 	
 	public void returnBook(Book b) {
@@ -46,7 +45,7 @@ public class Library {
 	private int findBook(Book b) {
 		int index;
 		for(int i=0; i<library.size(); i++) {
-			if(library.get(i).equals(b)) {
+			if(library.get(i).getTitle().equals(b.getTitle())) {
 				index = i;
 				return index;
 			}
@@ -59,7 +58,20 @@ public class Library {
 		for (int i=0; i<library.size(); i++) {
 			if(!(library.get(i).isCheckedOut())) {
 				if(book == index) {
-					return book;
+					return i;
+				}
+				book++;
+			}
+		}
+		return -1;
+	}
+	
+	public int findLoanedOutBook(int index) {
+		int book = 0;
+		for (int i=0; i<library.size(); i++) {
+			if(library.get(i).isCheckedOut()) {
+				if(book == index) {
+					return i;
 				}
 				book++;
 			}

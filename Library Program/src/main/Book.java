@@ -33,6 +33,10 @@ public class Book {
 		date = new Date(m, d, y);
 	}
 	
+	public boolean isOverdue() {
+		return date.isOverdue();
+	}
+	
 	public boolean isCheckedOut() {
 		return checkedOut;
 	}

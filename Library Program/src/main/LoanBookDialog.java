@@ -16,7 +16,7 @@ public class LoanBookDialog extends GBDialog {
 	JComboBox comboDay = addComboBox(3,2,1,1);
 	JComboBox comboYear = addComboBox(3,3,1,1);
 	JButton loan = addButton("Check Out", 5,2,1,1);
-	JButton exit = addButton("Return", 5,1,1,1);
+	JButton exit = addButton("Back", 5,1,1,1);
 	private int month = 0;
 	
 	Library lib;
@@ -158,9 +158,10 @@ public class LoanBookDialog extends GBDialog {
 					throw new FormatException("Please enter borrower's name.");
 				}
 				else {
-					lib.loanOutBook(lib.findInStockBook(bookSelection.getSelectedIndex()));
-					lib.getBook(lib.findInStockBook(bookSelection.getSelectedIndex())).setBorrower(borrower.getText());
-					lib.getBook(lib.findInStockBook(bookSelection.getSelectedIndex())).setDate(month, (int)comboDay.getSelectedItem(), (int)comboYear.getSelectedItem());
+					int i = lib.findInStockBook(bookSelection.getSelectedIndex());
+					lib.loanOutBook(i);
+					lib.getBook(i).setBorrower(borrower.getText());
+					lib.getBook(i).setDate(month, (int)comboDay.getSelectedItem(), (int)comboYear.getSelectedItem());
 					dispose();
 				}
 			}

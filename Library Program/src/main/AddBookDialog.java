@@ -8,7 +8,7 @@ public class AddBookDialog extends GBDialog {
 	JLabel authorLabel = addLabel("Author:", 2,1,1,1);
 	JTextField authorName = addTextField("", 2,2,1,1);
 	JButton addBook = addButton("Add Book", 3,2,1,1);
-	JButton exit = addButton("Return", 3,1,1,1);
+	JButton exit = addButton("Back", 3,1,1,1);
 	
 	Library lib;
 	

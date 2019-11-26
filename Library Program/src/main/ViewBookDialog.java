@@ -4,7 +4,7 @@ import javax.swing.*;
 public class ViewBookDialog extends GBDialog {
 
 	JTextArea output = addTextArea("", 1,1,4,1);
-	JButton exit = addButton("Return", 5,1,1,1);
+	JButton exit = addButton("Back", 5,1,1,1);
 	
 	Library lib;
 	

@@ -50,5 +50,13 @@ public class LibraryGUI extends GBFrame {
 				messageBox("There are no books loaned out.");
 			}
 		}
+		if(button==viewOverdueButton) {
+			if(lib.findLoanedOutBook(0)!=-1) {
+				ViewOverdueDialog vod = new ViewOverdueDialog(this, lib);
+			}
+			else {
+				messageBox("There are no books loaned out.");
+			}
+		}
 	}
 }

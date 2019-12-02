@@ -15,7 +15,6 @@ public class LibraryGUI extends GBFrame {
 	JButton returnBookButton = addButton("Return Book", 1,3,1,1);
 	JButton searchBookButton = addButton("Search", 1,4,1,1);
 	JButton viewButton = addButton("View Books", 1,5,1,1);
-	JButton viewOverdueButton = addButton("View Overdue", 1,6,1,1);
 	
 	Library lib = new Library();
 	
@@ -50,13 +49,8 @@ public class LibraryGUI extends GBFrame {
 				messageBox("There are no books loaned out.");
 			}
 		}
-		if(button==viewOverdueButton) {
-			if(lib.findLoanedOutBook(0)!=-1) {
-				ViewOverdueDialog vod = new ViewOverdueDialog(this, lib);
-			}
-			else {
-				messageBox("There are no books loaned out.");
-			}
+		if(button==searchBookButton) {
+			SearchBookDialog sbd = new SearchBookDialog(this, lib);
 		}
 	}
 }

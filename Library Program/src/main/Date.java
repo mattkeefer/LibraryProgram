@@ -5,10 +5,16 @@ import java.util.Calendar;
 public class Date {
 	private int[] dueDate = new int[2];
 	private int[] toDayt = new int[2];
+	private int month;
+	private int day;
+	private int year;
 	
 	public Date(int m, int d, int y) {
 		dueDate = convertDate(m, d+14, y);
 		toDayt = convertDate(Calendar.getInstance().get(Calendar.MONTH)+1, Calendar.getInstance().get(Calendar.DATE), Calendar.getInstance().get(Calendar.YEAR));
+		month = m;
+		day = d;
+		year = y;
 	}
 	
 	private boolean isLeapYear(int y) {
@@ -25,6 +31,10 @@ public class Date {
 	private int[] convertDate(int mn, int dy, int yr) {
 		int date = 0;
 		int[] dateArr = new int[2];
+		if(mn == 0) {
+			dateArr = null;
+			return dateArr;
+		}
 		switch(mn) {
 		case 1 : //jan - 31
 			break;
@@ -76,8 +86,10 @@ public class Date {
 		}
 		dateArr[0] = date;
 		dateArr[1] = yr;
-		System.out.println(date);
-		System.out.println(yr);
 		return dateArr;
+	}
+	
+	public String getDate() {
+		return month+"/"+day+"/"+year;
 	}
 }

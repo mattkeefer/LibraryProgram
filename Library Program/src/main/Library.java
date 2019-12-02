@@ -78,4 +78,13 @@ public class Library {
 		}
 		return -1;
 	}
+	
+	public Book findBookFromTitle(String t) throws FormatException {
+		for(int i=0; i<getSize(); i++) {
+			if(getBook(i).getTitle().equalsIgnoreCase(t)) {
+				return getBook(i);
+			}
+		}
+		throw new FormatException("The entered book does not exist within the library.");
+	}
 }

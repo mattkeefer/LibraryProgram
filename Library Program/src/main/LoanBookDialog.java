@@ -3,6 +3,7 @@ import BreezySwing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.swing.*;
 
@@ -32,9 +33,9 @@ public class LoanBookDialog extends GBDialog {
 				bookSelection.addItem(l.getBook(i).getTitle());
 			}
 		}
-		for(int i=0; i<=5000; i++) {
+		for(int i=0; i<=Calendar.getInstance().get(Calendar.YEAR); i++) {
 			comboYear.addItem(i);
-			comboYear.setSelectedItem(2019);
+			comboYear.setSelectedItem(Calendar.getInstance().get(Calendar.YEAR));
 		}
 		comboMonth.addItem("January");
 		comboMonth.addItem("February");

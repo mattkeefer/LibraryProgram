@@ -33,6 +33,10 @@ public class Book {
 		date = new Date(m, d, y);
 	}
 	
+	private void resetDate() {
+		date = new Date(0,0,0);
+	}
+	
 	public boolean isOverdue() {
 		return date.isOverdue();
 	}
@@ -45,7 +49,12 @@ public class Book {
 		checkedOut = b;
 		if(!b) {
 			borrower = "";
+			resetDate();
 		}
+	}
+	
+	public String getDateBorrowed() {
+		return date.getDate();
 	}
 	
 	public void setBorrower(String b) {

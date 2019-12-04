@@ -19,9 +19,13 @@ public class SearchBookDialog extends GBDialog {
 	Object[][] data;
 	Library lib;
 
-	public SearchBookDialog(JFrame frm, Library l) {
+	public SearchBookDialog(JFrame frm, Library l) throws FormatException {
 		super(frm);
 		lib = l;
+		if(lib.getSize()==0) {
+			dispose();
+			throw new FormatException("There are no books in the library.");
+		}
 		String[] columnNames = {"hi","bye"};
 		data = new String[lib.getSize()][3];
 		output.setLayout(new BorderLayout());

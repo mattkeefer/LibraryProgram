@@ -25,12 +25,8 @@ public class Library {
 		return library.size();
 	}
 	
-	public String getLibrary() {
-		String out = "";
-		for(Book b : library) {
-			out += b.toString() + "\n\n";
-		}
-		return out;
+	public ArrayList<Book> getLibrary() {
+		return library;
 	}
 	
 	public void loanOutBook(int i) {

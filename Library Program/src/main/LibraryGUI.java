@@ -15,6 +15,7 @@ public class LibraryGUI extends GBFrame {
 	JButton returnBookButton = addButton("Return Book", 1,3,1,1);
 	JButton searchBookButton = addButton("Search", 1,4,1,1);
 	JButton viewButton = addButton("View Books", 1,5,1,1);
+	JButton extraButton = addButton("Extra Credit", 1,6,1,1);
 	
 	Library lib = new Library();
 	
@@ -34,23 +35,36 @@ public class LibraryGUI extends GBFrame {
 			ViewBookDialog vbd = new ViewBookDialog(this, lib);
 		}
 		if(button==loanBookButton) {
-			if(lib.findInStockBook(0)!=-1) {
+			try {
 				LoanBookDialog lbd = new LoanBookDialog(this, lib);
 			}
-			else {
-				messageBox("There are no books in stock.");
+			catch(FormatException e) {
+				messageBox(e.getMessage());
 			}
 		}
 		if(button==returnBookButton) {
-			if(lib.findLoanedOutBook(0)!=-1) {
+			try {
 				ReturnBookDialog rbd = new ReturnBookDialog(this, lib);
 			}
-			else {
-				messageBox("There are no books loaned out.");
+			catch(FormatException e) {
+				messageBox(e.getMessage());
 			}
 		}
 		if(button==searchBookButton) {
-			SearchBookDialog sbd = new SearchBookDialog(this, lib);
+			try {
+				SearchBookDialog sbd = new SearchBookDialog(this, lib);
+			}
+			catch(FormatException e) {
+				messageBox(e.getMessage());
+			}
+		}
+		if(button==extraButton) {
+			try {
+				ExtraCreditDialog ecd = new ExtraCreditDialog(this, lib);
+			}
+			catch(FormatException e) {
+				messageBox(e.getMessage());
+			}
 		}
 	}
 }

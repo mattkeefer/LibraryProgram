@@ -26,8 +26,13 @@ public class LoanBookDialog extends GBDialog {
 		return (y%4==0)&&(y%100!=0)||(y%400==0);
 	}
 	
-	public LoanBookDialog(JFrame frm, Library l) {
+	public LoanBookDialog(JFrame frm, Library l) throws FormatException {
 		super(frm);
+		lib = l;
+		if(lib.findInStockBook(0)==-1) {
+			dispose();
+			throw new FormatException("There are no books in stock.");
+		}
 		for(int i=0; i<l.getSize(); i++) {
 			if(!(l.getBook(i).isCheckedOut())) {
 				bookSelection.addItem(l.getBook(i).getTitle());
@@ -53,7 +58,6 @@ public class LoanBookDialog extends GBDialog {
 		comboMonth.setSelectedItem("January");
 		setDayComboBox();
 		comboDay.setSelectedItem(1);
-		lib = l;
 		comboMonth.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -75,6 +79,51 @@ public class LoanBookDialog extends GBDialog {
 		setVisible(true);
 	}
 	
+	public LoanBookDialog(JFrame ecd, Library l, Book b) {
+		super(ecd);
+		lib = l;
+		bookSelection.addItem(b.getTitle());
+		for(int i=0; i<=Calendar.getInstance().get(Calendar.YEAR); i++) {
+			comboYear.addItem(i);
+			comboYear.setSelectedItem(Calendar.getInstance().get(Calendar.YEAR));
+		}
+		comboMonth.addItem("January");
+		comboMonth.addItem("February");
+		comboMonth.addItem("March");
+		comboMonth.addItem("April");
+		comboMonth.addItem("May");
+		comboMonth.addItem("June");
+		comboMonth.addItem("July");
+		comboMonth.addItem("August");
+		comboMonth.addItem("September");
+		comboMonth.addItem("October");
+		comboMonth.addItem("November");
+		comboMonth.addItem("December");
+		
+		comboMonth.setSelectedItem("January");
+		setDayComboBox();
+		comboDay.setSelectedItem(1);
+		comboMonth.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				comboDay.removeAllItems();
+				setDayComboBox();
+			}
+		});
+		comboYear.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(isLeapYear((int)comboYear.getSelectedItem())) {
+					comboDay.removeAllItems();
+					setDayComboBox();
+				}
+			}
+		});
+		setSize(400, 200);
+		setTitle("Loan Single Book");
+		setVisible(true);
+	}
+
 	private void setDayComboBox() {
 		
 		for(int i=1; i<=28; i++) {

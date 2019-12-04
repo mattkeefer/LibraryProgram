@@ -39,7 +39,7 @@ public class SearchBookDialog extends GBDialog {
 		table.disable();
 		
 		setSize(600, 200);
-		setTitle("Add Book");
+		setTitle("Search Book");
 		setVisible(true);
 	}
 	

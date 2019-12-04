@@ -21,6 +21,7 @@ public class LoanBookDialog extends GBDialog {
 	private int month = 0;
 	
 	Library lib;
+	boolean prev = false;
 	
 	private boolean isLeapYear(int y) {
 		return (y%4==0)&&(y%100!=0)||(y%400==0);
@@ -38,7 +39,7 @@ public class LoanBookDialog extends GBDialog {
 				bookSelection.addItem(l.getBook(i).getTitle());
 			}
 		}
-		for(int i=0; i<=Calendar.getInstance().get(Calendar.YEAR); i++) {
+		for(int i=0; i<=5000; i++) {
 			comboYear.addItem(i);
 			comboYear.setSelectedItem(Calendar.getInstance().get(Calendar.YEAR));
 		}
@@ -69,6 +70,12 @@ public class LoanBookDialog extends GBDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(isLeapYear((int)comboYear.getSelectedItem())) {
+					prev = true;
+					comboDay.removeAllItems();
+					setDayComboBox();
+				}
+				else if(prev) {
+					prev = false;
 					comboDay.removeAllItems();
 					setDayComboBox();
 				}
@@ -83,7 +90,7 @@ public class LoanBookDialog extends GBDialog {
 		super(ecd);
 		lib = l;
 		bookSelection.addItem(b.getTitle());
-		for(int i=0; i<=Calendar.getInstance().get(Calendar.YEAR); i++) {
+		for(int i=0; i<=5000; i++) {
 			comboYear.addItem(i);
 			comboYear.setSelectedItem(Calendar.getInstance().get(Calendar.YEAR));
 		}

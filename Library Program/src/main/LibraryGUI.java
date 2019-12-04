@@ -32,7 +32,12 @@ public class LibraryGUI extends GBFrame {
 			AddBookDialog abd = new AddBookDialog(this, lib);
 		}
 		if(button==viewButton) {
-			ViewBookDialog vbd = new ViewBookDialog(this, lib);
+			try {
+				ViewBookDialog vbd = new ViewBookDialog(this, lib);
+			}
+			catch(FormatException e) {
+				messageBox(e.getMessage());
+			}
 		}
 		if(button==loanBookButton) {
 			try {

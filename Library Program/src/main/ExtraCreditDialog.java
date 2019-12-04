@@ -20,6 +20,8 @@ public class ExtraCreditDialog extends GBDialog {
 			throw new FormatException("There are no books in the library.");
 		}
 		initializeList();
+		//bookInfo.setContentType("text/html");
+		bookInfo.setEditable(false);
 		setSize(500, 500);
 		setTitle("Extra Credit");
 		setVisible(true);
@@ -30,12 +32,7 @@ public class ExtraCreditDialog extends GBDialog {
 		ArrayList<Book> bookLibrary = lib.getLibrary();
 		for(Book b : bookLibrary) {
 			if(b.isCheckedOut()) {
-				if(b.isOverdue()) {
-					addToList("<html>"+b.getTitle()+" - <font color='red'>Checked Out</font>, <font color='red'>Overdue</html>");
-				}
-				else {
-					addToList("<html>"+b.getTitle()+" - <font color='red'>Checked Out</font></html>");
-				}
+				addToList("<html>"+b.getTitle()+" - <font color='red'>Checked Out</font></html>");
 			}
 			else {
 				addToList("<html>"+b.getTitle()+" - <font color='green'>Available</font></html>");

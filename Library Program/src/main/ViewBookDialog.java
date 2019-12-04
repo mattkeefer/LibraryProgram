@@ -18,9 +18,13 @@ public class ViewBookDialog extends GBDialog {
 	Object[][] data;
 	Library lib;
 	
-	public ViewBookDialog(JFrame frm, Library l) {
+	public ViewBookDialog(JFrame frm, Library l) throws FormatException {
 		super(frm);
 		lib = l;
+		if(lib.getSize()==0) {
+			dispose();
+			throw new FormatException("There are no books in the library.");
+		}
 		String[] columnNames = {"Title",
 	            "Author",
 	            "Availability"};

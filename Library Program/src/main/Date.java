@@ -28,6 +28,14 @@ public class Date {
 		return false;
 	}
 	
+	public boolean isFuture() {
+		int[] checkDate = convertDate(month, day, year);
+		if(checkDate[0] > toDayt[0] && checkDate[1] >= toDayt[1]) {
+			return true;
+		}
+		return false;
+	}
+	
 	private int[] convertDate(int mn, int dy, int yr) {
 		int date = 0;
 		int[] dateArr = new int[2];

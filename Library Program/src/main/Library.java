@@ -7,10 +7,6 @@ public class Library {
 	
 	public Library() {
 		library = new ArrayList<Book>();
-		library.add(new Book("Cat In The Hat", "Dr. Seuss"));
-		library.add(new Book("The Grapes of Wrath", "John Steinbeck"));
-		library.add(new Book("To Kill A Mockingbird", "Harper Lee"));
-		library.add(new Book("Webster’s Dictionary", "Webster"));
 	}
 	
 	public void storeBook(Book b) {
@@ -75,12 +71,16 @@ public class Library {
 		return -1;
 	}
 	
-	public Book findBookFromTitle(String t) throws FormatException {
+	public ArrayList<Book> findBookFromTitle(String t) throws FormatException {
+		ArrayList<Book> books = new ArrayList<Book>();
 		for(int i=0; i<getSize(); i++) {
-			if(getBook(i).getTitle().equalsIgnoreCase(t)) {
-				return getBook(i);
+			if(getBook(i).getTitle().toLowerCase().contains(t.toLowerCase())) {
+				books.add(getBook(i));
 			}
 		}
-		throw new FormatException("The entered book does not exist within the library.");
+		if(books.size()!=0) {
+			return books;
+		}
+		throw new FormatException("There are no books containing this keyword.");
 	}
 }

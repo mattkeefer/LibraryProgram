@@ -22,6 +22,8 @@ public class LoanBookDialog extends GBDialog {
 	
 	Library lib;
 	boolean prev = false;
+	boolean single = false;
+	int index = -1;
 	
 	private boolean isLeapYear(int y) {
 		return (y%4==0)&&(y%100!=0)||(y%400==0);
@@ -30,6 +32,7 @@ public class LoanBookDialog extends GBDialog {
 	public LoanBookDialog(JFrame frm, Library l) throws FormatException {
 		super(frm);
 		lib = l;
+		single = false;
 		if(lib.findInStockBook(0)==-1) {
 			dispose();
 			throw new FormatException("There are no books in stock.");
@@ -56,9 +59,9 @@ public class LoanBookDialog extends GBDialog {
 		comboMonth.addItem("November");
 		comboMonth.addItem("December");
 		
-		comboMonth.setSelectedItem("January");
+		comboMonth.setSelectedIndex(Calendar.getInstance().get(Calendar.MONTH));
 		setDayComboBox();
-		comboDay.setSelectedItem(1);
+		comboDay.setSelectedItem(Calendar.getInstance().get(Calendar.DATE));
 		comboMonth.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -69,7 +72,7 @@ public class LoanBookDialog extends GBDialog {
 		comboYear.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(isLeapYear((int)comboYear.getSelectedItem())) {
+				if(isLeapYear((int)comboYear.getSelectedItem()) && comboMonth.getSelectedItem().toString().equals("February")) {
 					prev = true;
 					comboDay.removeAllItems();
 					setDayComboBox();
@@ -86,9 +89,12 @@ public class LoanBookDialog extends GBDialog {
 		setVisible(true);
 	}
 	
-	public LoanBookDialog(JFrame ecd, Library l, Book b) {
+	public LoanBookDialog(JFrame ecd, Library l, Book b, int in) { //from extra credit dialog (single book)
 		super(ecd);
 		lib = l;
+		single = true;
+		index = in;
+		prev = false;
 		bookSelection.addItem(b.getTitle());
 		for(int i=0; i<=5000; i++) {
 			comboYear.addItem(i);
@@ -107,9 +113,9 @@ public class LoanBookDialog extends GBDialog {
 		comboMonth.addItem("November");
 		comboMonth.addItem("December");
 		
-		comboMonth.setSelectedItem("January");
+		comboMonth.setSelectedIndex(Calendar.getInstance().get(Calendar.MONTH));
 		setDayComboBox();
-		comboDay.setSelectedItem(1);
+		comboDay.setSelectedItem(Calendar.getInstance().get(Calendar.DATE));
 		comboMonth.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -120,7 +126,13 @@ public class LoanBookDialog extends GBDialog {
 		comboYear.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(isLeapYear((int)comboYear.getSelectedItem())) {
+				if(isLeapYear((int)comboYear.getSelectedItem()) && comboMonth.getSelectedItem().toString().equals("February")) {
+					prev = true;
+					comboDay.removeAllItems();
+					setDayComboBox();
+				}
+				else if(prev) {
+					prev = false;
 					comboDay.removeAllItems();
 					setDayComboBox();
 				}
@@ -132,7 +144,6 @@ public class LoanBookDialog extends GBDialog {
 	}
 
 	private void setDayComboBox() {
-		
 		for(int i=1; i<=28; i++) {
 			comboDay.addItem(i);
 		}
@@ -215,7 +226,15 @@ public class LoanBookDialog extends GBDialog {
 					throw new FormatException("Please enter borrower's name.");
 				}
 				else {
-					int i = lib.findInStockBook(bookSelection.getSelectedIndex());
+					int i;
+					if(!single) {
+						i = lib.findInStockBook(bookSelection.getSelectedIndex());
+					}
+					else {
+						i = index;
+						index = -1;
+						single = false;
+					}
 					lib.loanOutBook(i);
 					lib.getBook(i).setBorrower(borrower.getText());
 					lib.getBook(i).setDate(month, (int)comboDay.getSelectedItem(), (int)comboYear.getSelectedItem());

@@ -41,6 +41,10 @@ public class Book {
 		return date.isOverdue();
 	}
 	
+	public boolean isFuture() {
+		return date.isFuture();
+	}
+	
 	public boolean isCheckedOut() {
 		return checkedOut;
 	}

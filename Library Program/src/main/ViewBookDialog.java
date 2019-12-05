@@ -114,7 +114,12 @@ public class ViewBookDialog extends GBDialog {
 			row3[0] = b.getTitle();
 			row3[1] = b.getAuthor();
 			if(b.isCheckedOut()) {
-				row3[2] = "<html><font color='red'>Loaned Out</font></html>";
+				if(b.isFuture()) {
+					row3[2] = "<html><font color='blue'>On Hold</font></html>";
+				}
+				else {
+					row3[2] = "<html><font color='red'>Loaned Out</font></html>";
+				}
 			}
 			else {
 				row3[2] = "<html><font color='green'>In Stock</font></html>";

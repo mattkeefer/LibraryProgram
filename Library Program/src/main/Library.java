@@ -71,6 +71,7 @@ public class Library {
 		return -1;
 	}
 	
+	//returns array list of books containing the specified keyword
 	public ArrayList<Book> findBookFromTitle(String t) throws FormatException {
 		ArrayList<Book> books = new ArrayList<Book>();
 		for(int i=0; i<getSize(); i++) {

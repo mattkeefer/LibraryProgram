@@ -17,10 +17,12 @@ public class Date {
 		year = y;
 	}
 	
+	//determines if entered year is a leap year
 	private boolean isLeapYear(int y) {
 		return (y%4==0)&&(y%100!=0)||(y%400==0);
 	}
 	
+	//determines if book is overdue
 	public boolean isOverdue() {
 		if(toDayt[0] > dueDate[0] && toDayt[1] >= dueDate[1]) {
 			return true;
@@ -28,6 +30,7 @@ public class Date {
 		return false;
 	}
 	
+	//determines if date book is checked out is after the current date
 	public boolean isFuture() {
 		int[] checkDate = convertDate(month, day, year);
 		if(checkDate[0] > toDayt[0] && checkDate[1] >= toDayt[1]) {
@@ -36,6 +39,7 @@ public class Date {
 		return false;
 	}
 	
+	//converts day/month into a number out of 365/366
 	private int[] convertDate(int mn, int dy, int yr) {
 		int date = 0;
 		int[] dateArr = new int[2];
